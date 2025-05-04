@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite time="1.772296667098999" tests='1' skipped='0'
+name="Enviar_Arquivo" failures='0' errors='0'><testcase time="1.772296667098999" name="Enviar_Um_Arquivo_.Json_Para_O_Bucket_S3" status="passed"
+         classname="Enviar_Arquivo_Json_Para_O_S3"><system-out>
+            <![CDATA[
+            @scenario.begin
+                
+                scenario: Enviar um arquivo .json para o bucket S3
+                given que eu possuo um arquivo "stackspot.json" ... Status.passed in 0.001222s 
+                given as credenciais da AWS válidas ... Status.passed in 0.000315s 
+                when eu envio o arquivo para o bucket "s3-github-action-tests" na chave "data/stackspot.json" ... Status.passed in 1.723s 
+                then o arquivo deve estar disponível no bucket ... Status.passed in 0.04762s 
+@scenario.end
+            ----------------------------------------------------------------------------------------------------
+            ]]>
+            </system-out>
+        </testcase></testsuite>

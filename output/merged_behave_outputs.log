@@ -1,0 +1,8 @@
+Funcionalidade: Enviar arquivo JSON para o S3 # features/enviar_arquivo.feature:2
+
+  Cenário: Enviar um arquivo .json para o bucket S3                                                 # features/enviar_arquivo.feature:4
+    Dado que eu possuo um arquivo "stackspot.json"                                                  # steps/s3_steps.py:7
+    E as credenciais da AWS válidas                                                                 # steps/s3_steps.py:16
+    Quando eu envio o arquivo para o bucket "s3-github-action-tests" na chave "data/stackspot.json" # steps/s3_steps.py:23
+    Então o arquivo deve estar disponível no bucket                                                 # steps/s3_steps.py:35
+
