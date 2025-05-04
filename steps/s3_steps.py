@@ -2,35 +2,38 @@ import os
 from behave import given, when, then
 from services.s3_services import S3Services
 import logging
+
 logging.basicConfig(level=logging.INFO)
 
 log = logging.getLogger(__name__)
 
-@given('que eu possuo um arquivo "{arquivo} e as credenciais da AWS válidas')
-def step_impl(context, arquivo):
-    os.makedirs('data', exist_ok=True)
-    context.arquivo = f'data/{arquivo}'
 
+@given('que eu possuo as seguintes informações')
+def step_impl(context):
+    # DataTable é acessível via context.table
+    row = context.table[0]
+    context.arquivo = f"data/{row['arquivo']}"
+    context.bucket = row['bucket']
+    context.chave = row['chave']
+
+    os.makedirs('data', exist_ok=True)
     context.aws_access_key = os.getenv('AWS_ACCESS_KEY_ID')
     context.aws_secret_key = os.getenv('AWS_SECRET_ACCESS_KEY')
     context.region = 'sa-east-1'
-    # log.info("## given method ##")
-    # log.info(f"AWS_ACCESS_KEY_ID: {context.aws_access_key}")
-    # log.info(f"AWS_SECRET_ACCESS_KEY: {'*' * len(context.aws_secret_key) if context.aws_secret_key else ''}")
-    # log.info(f"AWS_REGION: {context.region}")
 
-@when('eu envio o arquivo para o bucket "{bucket}" na chave "{chave}"')
-def step_impl(context, bucket, chave):
-    log.info(f"Preparando para enviar arquivo '{context.arquivo}' para bucket '{bucket}' na chave '{chave}'")
-    context.bucket = bucket
-    context.chave = chave
+
+@when('eu envio o arquivo para o bucket informado na chave informada')
+def step_impl(context):
+    log.info(
+        f"Preparando para enviar arquivo '{context.arquivo}' para bucket '{context.bucket}' na chave '{context.chave}'")
     context.s3_client = S3Services.criar_client(
         context.aws_access_key, context.aws_secret_key, context.region
     )
     context.resultado = S3Services.enviar_arquivo_s3(
-        context.s3_client, bucket, context.arquivo, chave
+        context.s3_client, context.bucket, context.arquivo, context.chave
     )
     log.info("Arquivo enviado com sucesso.")
+
 
 @then('o arquivo deve estar disponível no bucket')
 def step_impl(context):

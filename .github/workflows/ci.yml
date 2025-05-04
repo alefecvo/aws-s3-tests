@@ -5,6 +5,8 @@ on:
     branches:
       - main
   pull_request:
+  schedule:
+    - cron: '0 8 * * 1'  # Toda segunda-feira às 8h UTC
 
 jobs:
   test:
