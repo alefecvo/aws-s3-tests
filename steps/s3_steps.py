@@ -17,7 +17,7 @@ def step_impl(context, arquivo):
 def step_impl(context):
     context.aws_access_key = os.getenv('AWS_ACCESS_KEY_ID')
     context.aws_secret_key = os.getenv('AWS_SECRET_ACCESS_KEY')
-    context.region = os.getenv('AWS_REGION')
+    context.region = os.getenv('AWS_REGION', 'sa-east-1')
 
 
 @when('eu envio o arquivo para o bucket "{bucket}" na chave "{chave}"')
