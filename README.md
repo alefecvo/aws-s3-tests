@@ -2,7 +2,7 @@
 
 Este é um exemplo básico de um projeto de automação de testes enviando arquivo .json para bucket S3 da AWS usando Python, `behave` e `boto3`.
 
-Vamos la...
+Vamos la.
 
 ## Estrutura do Projeto
 
